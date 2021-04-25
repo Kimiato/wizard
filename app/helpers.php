@@ -8,6 +8,7 @@
 
 use App\Repositories\Catalog;
 use App\Repositories\Document;
+use App\Repositories\Project;
 use App\Repositories\Template;
 use App\Repositories\User;
 use Carbon\Carbon;
@@ -130,10 +131,11 @@ function navigator(
  * 导航排序，排序后，文件夹靠前，普通文件靠后
  *
  * @param array $navItems
+ * @param int $sortStyle
  *
  * @return array
  */
-function navigatorSort($navItems)
+function navigatorSort($navItems, $sortStyle = Project::SORT_STYLE_DIR_FIRST)
 {
     $sortItem = function ($a, $b) {
         try {
@@ -153,7 +155,10 @@ function navigatorSort($navItems)
 
     usort(
         $navItems,
-        function ($a, $b) use ($sortItem) {
+        function ($a, $b) use ($sortItem, $sortStyle) {
+            if ($sortStyle == Project::SORT_STYLE_FREE) {
+                return $sortItem($a, $b);
+            }
 
             $aIsFolder = !empty($a['nodes']);
             $bIsFolder = !empty($b['nodes']);
@@ -505,6 +510,21 @@ function ldap_enabled(): bool
 }
 
 /**
+ * 是否启用注册功能支持
+ *
+ * @return bool
+ */
+function register_enabled(): bool
+{
+    static $enabled = null;
+    if (is_null($enabled)) {
+        $enabled = (bool)config('wizard.register_enabled');
+    }
+
+    return $enabled;
+}
+
+/**
  * 站长统计代码区域
  *
  * @return string
@@ -687,6 +707,26 @@ function convertSqlTo(string $sql, $callback)
 }
 
 /**
+ * Markdown 预处理
+ *
+ * @param string $markdown
+ * @return string
+ */
+function processMarkdown(string $markdown): string
+{
+    $defaultTOC = config('wizard.markdown.default_toc');
+    if (!in_array($defaultTOC, ['TOC', 'TOCM'])) {
+        return $markdown;
+    }
+
+    if (Str::contains($markdown, ['[TOC]', '[TOCM]'])) {
+        return $markdown;
+    }
+
+    return "[{$defaultTOC}]\n\n{$markdown}";
+}
+
+/**
  * 预处理 X-spreadsheet 表格内容
  *
  * @param string $content
@@ -831,6 +871,10 @@ function processSpreedSheetRows($originalRows): array
  */
 function markdownCompatibilityStrict($pageItem = null)
 {
+    if (!config('wizard.markdown.strict')) {
+        return false;
+    }
+
     if (empty($pageItem) || empty($pageItem->created_at)) {
         return true;
     }

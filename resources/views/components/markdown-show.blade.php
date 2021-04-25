@@ -17,7 +17,7 @@
 <script src="{{ cdn_resource('/assets/vendor/editor-md/lib/sequence-diagram.min.js') }}"></script>
 <script src="{{ cdn_resource('/assets/vendor/editor-md/lib/flowchart.min.js') }}"></script>
 <script src="{{ cdn_resource('/assets/vendor/editor-md/lib/jquery.flowchart.min.js') }}"></script>
-<script src="{{ cdn_resource('/assets/vendor/mermaid.js') }}"></script>
+<script src="{{ cdn_resource('/assets/vendor/mermaid.min.js') }}"></script>
 <script src="{{ cdn_resource('/assets/vendor/editor-md/editormd.js') }}?{{ resourceVersion() }}"></script>
 <script src="{{ cdn_resource('/assets/vendor/viewer/viewer.min.js') }}"></script>
 
@@ -40,6 +40,7 @@
         }
         editormd.markdownToHTML('markdown-body', {
             tocm: true,
+            toc: true,
             tocDropdown: false,
             markdownSourceCode: true,
             taskList: true,
@@ -51,6 +52,11 @@
 
 
         window.setTimeout(function () {
+            // TOC 菜单项为空时，自动隐藏
+            if ($('.markdown-body .editormd-toc-menu .markdown-toc-list>li').length < 1) {
+                $('.markdown-body .editormd-toc-menu').hide();
+            }
+
             // TOC导航插入到侧边随滚动展示
             var tocElement = $('.markdown-body > .markdown-toc');
             if (tocElement.length < 1) {

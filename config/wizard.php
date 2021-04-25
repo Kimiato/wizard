@@ -10,57 +10,71 @@ return [
     /**
      * 当前版本
      */
-    'version'              => '1.2.6',
+    'version'                    => '1.2.7',
     /**
      * 版本检查，暂时不可用
      */
-    'version-check'        => env('WIZARD_VERSION_CHECK', false),
+    'version-check'              => env('WIZARD_VERSION_CHECK', false),
     /**
      * 新注册账号是否需要邮箱激活
      */
-    'need_activate'        => env('WIZARD_NEED_ACTIVATE', false),
+    'need_activate'              => env('WIZARD_NEED_ACTIVATE', false),
+    /**
+     * 是否启用用户注册支持
+     */
+    'register_enabled'           => env('WIZARD_REGISTER_ENABLED', true),
+    /**
+     * 新账号注册是否需要邀请码
+     */
+    'register_invitation'        => env('WIZARD_REGISTER_INVITATION', false),
+    /**
+     * 静态邀请码
+     *
+     * 不设置则不启用静态邀请码，设置后，邀请码必须与该邀请码一致才能注册
+     */
+    'register_invitation_static' => env('WIZARD_REGISTER_INVITATION_STATIC', ''),
     /**
      * JWT 加密密码
      */
-    'jwt_secret'           => env('WIZARD_JWT_SECRET'),
+    'jwt_secret'                 => env('WIZARD_JWT_SECRET'),
 
     /**
      * 默认主题
      */
-    'theme'                => env('WIZARD_DEFAULT_THEME', 'default'),
+    'theme'                      => env('WIZARD_DEFAULT_THEME', 'default'),
 
     /**
      * 静态资源版本
      */
-    'resource_version'     => env('WIZARD_RESOURCE_VERSION', '201709071013'),
+    'resource_version'           => env('WIZARD_RESOURCE_VERSION', '201709071013'),
     /**
      * 版权地址
      */
-    'copyright'            => env('WIZARD_COPYRIGHT', 'AICODE.CC'),
+    'copyright'                  => env('WIZARD_COPYRIGHT', 'AICODE.CC'),
 
     /**
      * 管理员在公共页面可以查看所有项目
      */
-    'admin_see_all'        => env('WIZARD_ADMIN_SEE_ALL', true),
+    'admin_see_all'              => env('WIZARD_ADMIN_SEE_ALL', true),
 
     /**
      * 登录页面背景图片
      */
-    'login_background_img' => env('WIZARD_LOGIN_BACKGROUND_IMG', '/assets/background-image.jpeg'),
+    'login_background_img'       => env('WIZARD_LOGIN_BACKGROUND_IMG', '/assets/background-image.jpeg'),
 
     /**
      * 是否启用文档评论功能
      */
-    'reply_support'        => env('WIZARD_REPLY_SUPPORT', true),
+    'reply_support'              => env('WIZARD_REPLY_SUPPORT', true),
     /**
      * 是否必须登录才能查看文档
      */
-    'must_login'           => env('WIZARD_MUST_LOGIN', false),
+    'must_login'                 => env('WIZARD_MUST_LOGIN', false),
 
     /**
      * CDN 加速
      */
-    'cdn'                  => [
+    'cdn'                        => [
         /**
          * 是否启用 CDN 加速
          */
@@ -74,7 +88,7 @@ return [
     /**
      * LDAP
      */
-    'ldap'                 => [
+    'ldap'                       => [
         /**
          * 是否启用ldap
          */
@@ -88,9 +102,25 @@ return [
     ],
 
     /**
+     * Markdown 配置
+     */
+    'markdown'                   => [
+        /**
+         * 是否启用严格的 Markdown 解释器，如果你的 markdown 格式并不标准，可以将该选项设置为 false
+         */
+        'strict'      => env('WIZARD_MARKDOWN_STRICT', true),
+        /**
+         * 是否自动添加 TOC（文档目录，当页面内容中不包含 TOC/TOCM 标签时，自动添加）
+         *
+         * 设置为空则不启用该功能，如果启用，则设置为 TOC 或者 TOCM
+         */
+        'default_toc' => env('WIZARD_MARKDOWN_TOC_DEFAULT', ''),
+    ],
+
+    /**
      * 表格类型文档配置
      */
-    'spreedsheet'          => [
+    'spreedsheet'                => [
         /**
          * 最大支持的行数
          */
@@ -112,7 +142,7 @@ return [
     /**
      * 文件附件
      */
-    'attachments'          => [
+    'attachments'                => [
         /**
          * 支持的文件扩展名列表，使用,分割
          */

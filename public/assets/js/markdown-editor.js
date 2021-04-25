@@ -83,6 +83,8 @@ $.wz.mdEditor = function (editor_id, params) {
         height: 800,
         taskList: true,
         tex: true,
+        toc: true,
+        tocm: true,
         flowChart: true,
         sequenceDiagram: true,
         imageUpload: true,
@@ -92,7 +94,7 @@ $.wz.mdEditor = function (editor_id, params) {
         toolbarIcons: function () {
             return ["undo", "redo", "|",
                 "bold", "del", "italic", "quote", "|",
-                "h2", "h3", "h4", "h5", "|",
+                "h1", "h2", "h3", "h4", "h5", "|",
                 "list-ul", "list-ol", "hr", "|",
                 "link", "image", "code", "code-block", "table", "pagebreak", "|",
                 "template", "mindMapping", "jsonToTable", "sqlToTable", "sqlCreateBox", "|",
@@ -252,7 +254,7 @@ $.wz.mdEditor = function (editor_id, params) {
                 mdEditor.imagePaste();
             });
 
-            editormd.loadPlugin('/assets/vendor/mermaid', function() {
+            editormd.loadPlugin('/assets/vendor/mermaid.min', function() {
                 mermaid.init(undefined, $(".markdown-body .mermaid"));
             });
 

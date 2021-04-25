@@ -504,6 +504,11 @@ a:hover {
     font-size: 1.2em!important;
 }
 
+.markdown-body .mermaid {
+    max-width: 100%;
+    overflow: auto;
+}
+
 .wz-page-content {
     margin-top: 20px;
 }
@@ -680,7 +685,7 @@ a:hover {
 
 .wz-markdown-style-fix img {
     max-width: 99%;
-    box-shadow: 3px 3px 7px #ccc;
+    /*box-shadow: 3px 3px 7px #ccc;*/
 }
 
 .wz-text-dashed {
@@ -1305,12 +1310,13 @@ li.L1, li.L3, li.L5, li.L7, li.L9 {
     color: #eaeaeae8;
 }
 
-.markdown-body blockquote {
-    border: none!important;
-}
-.markdown-body blockquote>p {
-    text-indent: 2em;
-}
+/*.markdown-body blockquote {*/
+/*    border: none!important;*/
+/*}*/
+/*.markdown-body blockquote>p {*/
+/*    text-indent: 2em;*/
+/*}*/
+
 .markdown-body pre.prettyprint {
     border: 1px dashed #ddd!important;
 }
@@ -1484,4 +1490,10 @@ pre.prettyprint *,
     border: 1px dashed #ccc;
     padding: 10px;
     background: #fdfdfd;
+}
+
+@media print {
+    .print-hide {
+        display: none;
+    }
 }
